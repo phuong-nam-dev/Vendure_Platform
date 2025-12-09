@@ -1,0 +1,12 @@
+.categoryWrapper {
+    display: flex;
+    flex-direction: row;
+}
+.categoryIcon {
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+}
+.categoryName {
+    flex: 1;
+}
