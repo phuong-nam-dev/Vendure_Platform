@@ -568,6 +568,11 @@ export type PageBlockProps = {
      * An optional set of CSS classes to apply to the block.
      */
     className?: string;
+    /**
+     * @description
+     * An optional set of CSS classes to apply to the CardContent element.
+     */
+    classNameCardContent?: string;
 };
 
 /**
@@ -593,6 +598,7 @@ export function PageBlock({
     title,
     description,
     className,
+    classNameCardContent,
     blockId,
     column,
 }: Readonly<PageBlockProps>) {
@@ -615,7 +621,7 @@ export function PageBlock({
                             {description && <CardDescription>{description}</CardDescription>}
                         </CardHeader>
                     ) : null}
-                    <CardContent className={cn(!title ? 'pt-6' : '', 'overflow-auto')}>
+                    <CardContent className={cn(!title ? 'pt-6' : '', 'overflow-auto', classNameCardContent)}>
                         {children}
                     </CardContent>
                 </Card>

@@ -1,7 +1,16 @@
 import { registerAlert } from '@/vdb/framework/alert/alert-extensions.js';
 import { searchIndexBufferAlert } from '@/vdb/framework/alert/search-index-buffer-alert/search-index-buffer-alert.js';
 import { setNavMenuConfig } from '@/vdb/framework/nav-menu/nav-menu-extensions.js';
-import { ChartLine, Percent, Settings2, ShoppingBag, Tags, Terminal, Users } from 'lucide-react';
+import {
+    ChartLine,
+    Percent,
+    Settings2,
+    ShoppingBag,
+    SquareChartGantt,
+    Tags,
+    Terminal,
+    Users,
+} from 'lucide-react';
 
 import { LatestOrdersWidget } from './dashboard-widget/latest-orders-widget/index.js';
 import { MetricsWidget } from './dashboard-widget/metrics-widget/index.js';
@@ -17,6 +26,14 @@ export function registerDefaults() {
                 placement: 'top',
                 icon: ChartLine,
                 url: '/',
+                order: 100,
+            },
+            {
+                id: 'product-status-board',
+                title: /* i18n*/ 'Product Status Board',
+                placement: 'top',
+                icon: SquareChartGantt,
+                url: '/product-status-board',
                 order: 100,
             },
             {

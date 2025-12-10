@@ -20,10 +20,10 @@ import {
     PageTitle,
 } from '@/vdb/framework/layout-engine/page-layout.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute } from '@tanstack/react-router';
 import { endOfDay, startOfMonth } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
-import { Trans, useLingui } from '@lingui/react/macro';
 
 export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
