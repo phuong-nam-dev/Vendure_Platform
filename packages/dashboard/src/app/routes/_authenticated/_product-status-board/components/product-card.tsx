@@ -84,27 +84,33 @@ const ProductCard = ({
                     {product.name}
                 </p>
 
+                <div className="text-sm line-clamp-1 break-all h-fit text-white/80">Slug: {product.slug}</div>
+
                 <div className="mt-2 flex items-center justify-between text-xs">
-                    <span className="text-slate-500">{new Date(product.createdAt).toLocaleDateString()}</span>
+                    <span className="text-slate-500">
+                        {t`Created at`}: {new Date(product.createdAt).toLocaleDateString()}
+                    </span>
+                </div>
+
+                <div className="flex mt-2 items-center justify-between gap-2">
                     <span
                         className={`px-2 py-0.5 rounded text-white text-[10px] ${product.enabled ? 'bg-green-500' : 'bg-gray-500'}`}
                     >
                         {product.enabled ? 'Enabled' : 'Disabled'}
                     </span>
-                </div>
-
-                <div className="mt-2 flex justify-end">
-                    <Switch
-                        disabled={isPending}
-                        checked={product.enabled}
-                        onCheckedChange={() => enabledToggleHandler(product.id, product.enabled)}
-                        className="cursor-pointer"
-                    />
+                    <div className="flex justify-end">
+                        <Switch
+                            disabled={isPending}
+                            checked={product.enabled}
+                            onCheckedChange={() => enabledToggleHandler(product.id, product.enabled)}
+                            className="cursor-pointer"
+                        />
+                    </div>
                 </div>
 
                 <div className="mt-3">
                     <div className="flex justify-between items-center text-[11px]">
-                        <span className="text-slate-600">Stock</span>
+                        <span className="text-slate-600">{t`Stock`}</span>
                         <span className="font-medium text-sm">{available}</span>
                     </div>
 
@@ -127,7 +133,7 @@ const ProductCard = ({
                                 {available <= 0 ? 'Out' : available <= 10 ? 'Low stock' : 'In stock'}
                             </span>
                             <span className="text-slate-400">
-                                On hand:{' '}
+                                {t`On hand`}:{' '}
                                 {product?.variants
                                     ?.at(0)
                                     ?.stockLevels?.reduce((s, l) => s + (l.stockOnHand ?? 0), 0) ?? 0}

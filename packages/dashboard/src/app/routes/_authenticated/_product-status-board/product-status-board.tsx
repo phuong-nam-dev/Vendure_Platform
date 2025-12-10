@@ -25,7 +25,7 @@ import { Loader2, LucideFileWarning, Search, X } from 'lucide-react';
 import { forwardRef, useState } from 'react';
 import ProductCard from './components/product-card.js';
 import { useGetListProducts } from './product-status-board.hooks.js';
-import { GetListProductsPayload, GetListProductsResponse } from './product-status-board.types.js';
+import { GetListProductsPayload, GetListProductsResponse, Status } from './product-status-board.types.js';
 
 export const Route = createFileRoute('/_authenticated/_product-status-board/product-status-board')({
     component: ProductStatusBoard,
@@ -48,9 +48,12 @@ function ProductStatusBoard() {
 
     const page = (searchParams.page as number) || 1;
 
+    const status = searchParams.status || Status.ALL;
+
     const payloadFilter: GetListProductsPayload = {
         filter: {
             search: debouncedSearch,
+            status,
         },
         pagination: {
             page,
@@ -143,6 +146,8 @@ const ProductFilter = ({
 }) => {
     const { t } = useLingui();
 
+    const [status, setStatus] = useState<string>('');
+
     const navigate = useNavigate({ from: Route.fullPath });
 
     const onClear = () => {
@@ -152,6 +157,15 @@ const ProductFilter = ({
                 const updated = { ...prev, page: 1, perPage: 24 };
                 delete updated.search;
                 return updated;
+            },
+        });
+    };
+
+    const handleChangeStatus = (value: string) => {
+        setStatus(value);
+        navigate({
+            search: (prev: any) => {
+                return { ...prev, status: value, page: 1 };
             },
         });
     };
@@ -173,6 +187,16 @@ const ProductFilter = ({
                         </Button>
                     )}
                 </div>
+                <Select value={status} onValueChange={handleChangeStatus}>
+                    <SelectTrigger className="w-full md:w-[180px]">
+                        <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={Status.ALL}>All</SelectItem>
+                        <SelectItem value={Status.ENABLED}>Enabled</SelectItem>
+                        <SelectItem value={Status.DISABLED}>Disabled</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
         </div>
     );
@@ -210,7 +234,12 @@ const ProductContent = ({
     if (items.length === 0) {
         return (
             <div className="col-span-full text-center py-12 text-muted-foreground">
-                {t`No assets found. Try adjusting your filters.`}
+                <img
+                    src="/empty_product.webp"
+                    alt={t`No results`}
+                    className="mx-auto mb-4 h-24 w-24 object-contain"
+                />
+                <div>{t`No results`}</div>
             </div>
         );
     }

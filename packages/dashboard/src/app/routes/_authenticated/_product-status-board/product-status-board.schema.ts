@@ -14,6 +14,7 @@ export const StockLevelsSchema = z.object({
 export const ProductVariantSchema = z.object({
     id: z.string(),
     stockLevels: z.array(StockLevelsSchema),
+    stockLevel: z.string().nullish(),
 });
 
 export const ProductSchema = z.object({

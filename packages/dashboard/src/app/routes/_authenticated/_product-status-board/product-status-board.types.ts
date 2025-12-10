@@ -14,9 +14,15 @@ export type GetListProductsResponse = {
     };
 };
 
+export enum Status {
+    ALL = 'All',
+    ENABLED = 'Enabled',
+    DISABLED = 'Disabled',
+}
+
 export type GetListProductsPayload = {
     filter?: {
-        status?: ProductStatus;
+        status?: Status;
         search?: string;
     };
     sort?: {

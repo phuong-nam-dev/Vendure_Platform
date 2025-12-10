@@ -9,6 +9,7 @@ import { getListProduct, updateProductEnabledServices } from './product-status-b
 import {
     GetListProductsPayload,
     GetListProductsResponse,
+    Status,
     UpdateProductEnabledInput,
 } from './product-status-board.types.js';
 
@@ -27,7 +28,13 @@ export function useGetListProducts(
                 filter.name = { contains: payload.filter.search };
             }
 
-            const options: any = {
+            if (payload?.filter?.status && payload.filter.status !== Status.ALL) {
+                filter.enabled = {
+                    eq: payload.filter.status === Status.ENABLED ? true : false,
+                };
+            }
+
+            const optionsQuery: any = {
                 skip: (payload?.pagination.page - 1) * payload?.pagination.perPage,
                 take: payload?.pagination.perPage,
                 filter: Object.keys(filter).length > 0 ? filter : undefined,
@@ -35,7 +42,7 @@ export function useGetListProducts(
             };
 
             const response = await getListProduct({
-                options,
+                options: optionsQuery,
             });
 
             return response;

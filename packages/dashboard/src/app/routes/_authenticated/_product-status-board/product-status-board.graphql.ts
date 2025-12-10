@@ -17,6 +17,7 @@ export const productListDocument = graphql(`
                 description
                 variants {
                     id
+                    stockLevel
                     stockLevels {
                         id
                         stockOnHand
