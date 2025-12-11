@@ -176,7 +176,7 @@ const ProductFilter = ({
                 <div className="relative flex-grow flex items-center gap-2">
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
-                        placeholder="Search assets..."
+                        placeholder="Search products..."
                         value={search}
                         onChange={e => onChangeSearch(e.target.value)}
                         className="pl-8"
@@ -279,6 +279,9 @@ const ProductPagination = ({ productsData }: { productsData?: GetListProductsRes
 
     return (
         <div className="flex justify-end flex-col md:flex-row items-center md:justify-between gap-4 flex-shrink-0">
+            <div className="mt-2 text-xs text-muted-foreground flex-shrink-0">
+                {totalItems} {totalItems === 1 ? 'product' : 'products'} found
+            </div>
             <div className="flex-1"></div>
             <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">{t`Items per page`}</span>
