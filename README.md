@@ -112,3 +112,7 @@ Plugin đồng thời hỗ trợ thao tác nhanh (quick edit) và đảm bảo U
 - UI consistency bằng TailwindCSS.
 
 - Không trùng lặp logic, dễ đọc và dễ mở rộng.
+
+## 3. Tổng kết
+
+- Cải tiến phù hợp với trang Vendure Dashboard cả về kiến trúc kỹ thuật lẫn UX. Với một số cải tiến nhỏ như filtering nâng cao, pagination và real-time update, feature này có thể trở thành một phần mở rộng hữu ích trong hệ thống production.
