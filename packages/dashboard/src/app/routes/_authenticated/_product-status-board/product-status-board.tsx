@@ -38,9 +38,9 @@ export const Route = createFileRoute('/_authenticated/_product-status-board/prod
 });
 
 function ProductStatusBoard() {
-    const [search, setSearch] = useState('');
-
     const searchParams = Route.useSearch();
+
+    const search = (searchParams.search as string) || '';
 
     const debouncedSearch = useDebounce(search, 500);
 
@@ -77,7 +77,7 @@ function ProductStatusBoard() {
                 className="h-[calc(100vh-146px)]"
                 classNameCardContent={cn('flex flex-col gap-4 justify-between h-full')}
             >
-                <ProductFilter search={search} onChangeSearch={value => setSearch(value)} />
+                <ProductFilter />
 
                 {isPending ? (
                     <div className="col-span-full flex justify-center py-12">
@@ -137,18 +137,31 @@ const ErrorProductsStatusBoard = ({ isFetching, refetch }: { isFetching: boolean
     );
 };
 
-const ProductFilter = ({
-    search,
-    onChangeSearch,
-}: {
-    search: string;
-    onChangeSearch: (value: string) => void;
-}) => {
+const ProductFilter = () => {
     const { t } = useLingui();
 
-    const [status, setStatus] = useState<string>('');
+    const searchParams = Route.useSearch();
+
+    const [status, setStatus] = useState<string>(searchParams.status || '');
+
+    const [search, setSearch] = useState<string>(searchParams.search || '');
 
     const navigate = useNavigate({ from: Route.fullPath });
+
+    const onChangeSearch = (value: string) => {
+        setSearch(value);
+        navigate({
+            search: (prev: any) => {
+                if (value.trim() === '') {
+                    const updated = { ...prev, page: 1 };
+                    delete updated.search;
+                    return updated;
+                }
+
+                return { ...prev, search: value.trim(), page: 1 };
+            },
+        });
+    };
 
     const onClear = () => {
         onChangeSearch('');
