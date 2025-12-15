@@ -61,7 +61,15 @@ function ProductStatusBoard() {
         },
     };
 
-    const { data: productsData, isPending, isFetching, isError, refetch } = useGetListProducts(payloadFilter);
+    const {
+        data: productsData,
+        isPending,
+        isFetching,
+        isError,
+        refetch,
+    } = useGetListProducts(payloadFilter, {
+        staleTime: 5 * 60 * 1000,
+    });
 
     if (isError) return <ErrorProductsStatusBoard isFetching={isFetching} refetch={() => refetch()} />;
 

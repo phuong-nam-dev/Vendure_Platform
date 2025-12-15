@@ -39,6 +39,8 @@ const ProductCard = ({
                         enabled: !currentEnabled,
                     });
 
+                    queryClient.invalidateQueries({ queryKey: [PRODUCT_STATUS_BOARD_QUERY_KEY] });
+
                     toast.success('Product status updated');
                 },
                 onError: (_err, _vars, context: any) => {
