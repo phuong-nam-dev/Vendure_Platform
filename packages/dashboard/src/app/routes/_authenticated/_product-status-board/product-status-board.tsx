@@ -33,6 +33,8 @@ export const Route = createFileRoute('/_authenticated/_product-status-board/prod
         return {
             page: (search.page as number) || 1,
             perPage: (search.perPage as number) || 24,
+            search: (search.search as string) || '',
+            status: (search.status as string) || Status.ALL,
         };
     },
 });
@@ -40,15 +42,15 @@ export const Route = createFileRoute('/_authenticated/_product-status-board/prod
 function ProductStatusBoard() {
     const searchParams = Route.useSearch();
 
-    const search = (searchParams.search as string) || '';
+    const search = searchParams.search;
 
     const debouncedSearch = useDebounce(search, 500);
 
-    const perPage = (searchParams.perPage as number) || 24;
+    const perPage = searchParams.perPage;
 
-    const page = (searchParams.page as number) || 1;
+    const page = searchParams.page;
 
-    const status = searchParams.status || Status.ALL;
+    const status = searchParams.status;
 
     const payloadFilter: GetListProductsPayload = {
         filter: {
